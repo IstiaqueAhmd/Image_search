@@ -1,10 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-
-
-
-
-
+from image_service import search_image
+from schema import ImageQuery
 # Initialize FastAPI app
 app = FastAPI()
 
@@ -16,6 +13,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.post("/images", response_model=list)
+async def image_finder(Request: ImageQuery):
+    try:
+        imageList = search_image(Request.image_query)
+        return imageList
+    except:
+        raise HTTPException(status_code=500)
 
 
 if __name__ == "__main__":
