@@ -1,5 +1,11 @@
+import os
 import requests
 import json
+from dotenv import load_dotenv
+
+load_dotenv()
+
+SERPER_API_KEY=os.getenv("SERPER_API_KEY")
 
 url = "https://google.serper.dev/images"
 headers = {
